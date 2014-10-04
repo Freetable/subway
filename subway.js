@@ -83,7 +83,12 @@ async.waterfall([
   //var server = http.createServer(app).listen(process.env.PORT || 3000);
   var io = require("socket.io")(http);
 
-  http.listen(process.env.PORT || 3000);
+
+  // Updating for use with openshift
+  var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+  var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
+  http.listen(server_port, server_ip_address);
 
   // We pass off our socket.io listener to the connection module
   // so it can handle incoming events and emit different actions
